@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ankit Parihar — Data & Analytics · Paris</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#06080d; --ink2:#0d1117; --ink3:#141922;
+  --cream:#f0ece3; --cream2:#e8e3d9; --cream3:#faf8f4;
+  --gold:#c9a96e; --gold2:#e8d5a8; --gold3:#8b6914;
+  --smoke:#7a8395; --smoke2:#b0b8c8; --smoke3:#4a5568;
+  --white:#f8f6f1; --green:#3ecf8e;
+  --card:#111827; --card2:#1a2233;
+  --border:rgba(201,169,110,0.12); --border2:rgba(201,169,110,0.06);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--ink);color:var(--white);overflow-x:hidden}
+
+/* ─── CUSTOM CURSOR ─────────────────────────────── */
+.cur{width:8px;height:8px;background:var(--gold);border-radius:50%;position:fixed;z-index:9999;pointer-events:none;transform:translate(-50%,-50%);transition:width .2s,height .2s}
+.cur-ring{width:36px;height:36px;border:1px solid rgba(201,169,110,0.35);border-radius:50%;position:fixed;z-index:9998;pointer-events:none;transform:translate(-50%,-50%);transition:all .1s ease}
+
+/* ─── LANGUAGE SWITCHER ─────────────────────────── */
+.lang-bar{position:fixed;top:20px;right:calc(5vw + 90px);z-index:201;display:flex;gap:3px}
+.lb{font-family:'JetBrains Mono',monospace;font-size:.6rem;font-weight:600;letter-spacing:.1em;padding:5px 8px;background:rgba(13,17,23,.85);border:1px solid var(--border);color:var(--smoke2);cursor:pointer;transition:all .2s;backdrop-filter:blur(10px)}
+.lb:hover,.lb.on{background:var(--gold);color:var(--ink);border-color:var(--gold)}
+
+/* ─── NAV ────────────────────────────────────────── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 5vw;background:rgba(6,8,13,.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border2)}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:600;color:var(--gold);letter-spacing:.04em}
+.nav-sub{font-family:'DM Sans',sans-serif;font-size:.62rem;color:var(--smoke);font-weight:300;margin-left:.5rem}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{font-size:.72rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--smoke);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta{font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--gold);color:var(--ink);padding:.5rem 1.3rem;text-decoration:none;transition:background .2s}
+.nav-cta:hover{background:var(--gold2)}
+
+/* ─── HERO ───────────────────────────────────────── */
+#hero{min-height:100vh;display:grid;grid-template-columns:1fr 420px;gap:5rem;align-items:center;padding:8rem 5vw 4rem;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse 80% 70% at 70% 40%,rgba(201,169,110,.05) 0%,transparent 60%),radial-gradient(ellipse 40% 40% at 15% 80%,rgba(201,169,110,.03) 0%,transparent 50%)}
+.hero-grid-lines{position:absolute;inset:0;background-image:linear-gradient(rgba(201,169,110,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(201,169,110,.03) 1px,transparent 1px);background-size:80px 80px;mask-image:radial-gradient(ellipse at 70% 30%,black 30%,transparent 70%)}
+.hero-left{position:relative;z-index:2}
+.hero-eyebrow{display:flex;align-items:center;gap:.9rem;margin-bottom:2rem}
+.eyebrow-line{width:36px;height:1px;background:var(--gold);opacity:.6}
+.eyebrow-text{font-family:'JetBrains Mono',monospace;font-size:.65rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+h1.hero-name{font-family:'Cormorant Garamond',serif;font-size:clamp(3.2rem,5.5vw,5.2rem);font-weight:300;line-height:1.0;color:var(--white);margin-bottom:.4rem}
+h1.hero-name strong{font-weight:700;color:var(--gold);display:block}
+.hero-role{font-size:1rem;font-weight:300;color:var(--smoke2);margin-bottom:.5rem;letter-spacing:.02em}
+.hero-stack{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--smoke);letter-spacing:.06em;margin-bottom:2.2rem}
+.hero-desc{font-size:.97rem;line-height:1.78;color:rgba(248,246,241,.6);max-width:500px;margin-bottom:2.2rem}
+.hero-desc strong{color:var(--gold2);font-weight:500}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2.5rem}
+.btn-gold{background:var(--gold);color:var(--ink);padding:.8rem 1.8rem;font-weight:700;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:all .2s}
+.btn-gold:hover{background:var(--gold2);transform:translateY(-2px)}
+.btn-outline{border:1px solid rgba(201,169,110,.35);color:var(--gold2);padding:.8rem 1.8rem;font-weight:500;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:all .2s}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold)}
+.avail-badge{display:inline-flex;align-items:center;gap:.6rem;background:rgba(62,207,142,.07);border:1px solid rgba(62,207,142,.2);padding:.7rem 1.3rem;font-size:.68rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--green)}
+.avail-dot{width:6px;height:6px;background:var(--green);border-radius:50%;animation:blink 2s ease infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* Hero right */
+.hero-right{position:relative;z-index:2;display:flex;flex-direction:column;gap:1rem}
+.hero-photo-wrap{border:1px solid rgba(201,169,110,.2);overflow:hidden;flex-shrink:0}
+.hero-photo-wrap img{width:100%;height:280px;object-fit:cover;object-position:center 15%;filter:sepia(8%) contrast(1.05)}
+.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);border:1px solid var(--border)}
+.stat-box{background:var(--card);padding:1.6rem;text-align:center}
+.stat-n{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:700;color:var(--gold);line-height:1}
+.stat-l{font-size:.62rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--smoke);margin-top:.35rem}
+.client-strip{display:flex;gap:0;flex-wrap:wrap;border:1px solid var(--border)}
+.client-chip{flex:1;min-width:70px;padding:.8rem;text-align:center;font-size:.65rem;font-weight:600;color:var(--smoke);letter-spacing:.06em;background:var(--card);border-right:1px solid var(--border);transition:all .2s;cursor:default}
+.client-chip:last-child{border-right:none}
+.client-chip:hover{color:var(--gold);background:rgba(201,169,110,.06)}
+
+/* ─── DIVIDER ────────────────────────────────────── */
+.hr-gold{height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:.3;margin:0 5vw}
+
+/* ─── SECTIONS ───────────────────────────────────── */
+section:not(#hero){padding:6.5rem 5vw}
+.section-inner{max-width:1180px;margin:0 auto}
+.s-label{font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:.8rem;margin-bottom:.8rem}
+.s-label::before{content:'';width:24px;height:1px;background:var(--gold);opacity:.5}
+.s-title{font-family:'Cormorant Garamond',serif;font-size:clamp(1.9rem,3.5vw,3rem);font-weight:400;color:var(--white);line-height:1.15;margin-bottom:.8rem}
+.s-title em{font-style:italic;color:var(--gold2)}
+.s-sub{font-size:.92rem;color:var(--smoke);line-height:1.7;max-width:560px}
+
+/* ─── WORK TABLE ─────────────────────────────────── */
+#work{background:var(--ink2)}
+.work-table{width:100%;border-collapse:collapse;margin-top:3rem}
+.work-table th{font-family:'JetBrains Mono',monospace;font-size:.6rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--smoke3);text-align:left;padding:.8rem 1.2rem;border-bottom:1px solid var(--border)}
+.work-table td{padding:1.5rem 1.2rem;border-bottom:1px solid var(--border2);vertical-align:top}
+.work-table tr:hover td{background:rgba(201,169,110,.03)}
+.row-num{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--smoke3)}
+.cl-name{font-weight:700;font-size:.9rem;color:var(--white);margin-bottom:.2rem}
+.cl-sector{font-size:.68rem;color:var(--smoke);font-family:'JetBrains Mono',monospace;letter-spacing:.05em}
+.eng-text{font-size:.8rem;line-height:1.65;color:rgba(248,246,241,.6)}
+.result-pill{display:inline-block;font-size:.65rem;font-weight:600;color:var(--gold2);background:rgba(201,169,110,.1);border:1px solid rgba(201,169,110,.2);padding:.2rem .55rem;margin-bottom:.3rem;margin-right:.2rem}
+
+/* ─── PORTFOLIO ──────────────────────────────────── */
+#portfolio{background:var(--ink)}
+.port-tabs{display:flex;gap:0;border:1px solid var(--border);margin:2.5rem 0;max-width:580px}
+.port-tab{flex:1;padding:.7rem .6rem;font-family:'JetBrains Mono',monospace;font-size:.62rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--smoke);background:none;border:none;border-right:1px solid var(--border);cursor:pointer;transition:all .2s}
+.port-tab:last-child{border-right:none}
+.port-tab.on{background:var(--gold);color:var(--ink)}
+.port-tab:hover:not(.on){background:rgba(201,169,110,.07);color:var(--gold)}
+.port-slide{display:none}
+.port-slide.on{display:grid;grid-template-columns:1fr 340px;gap:3.5rem;align-items:start}
+
+/* Dashboard frame */
+.dash-frame{background:var(--card2);border:1px solid var(--border);overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.dash-bar{background:#1e2736;padding:9px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.06)}
+.dash-bar-title{font-family:'JetBrains Mono',monospace;font-size:.58rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--smoke2)}
+.dash-live{background:var(--gold);color:var(--ink);font-family:'JetBrains Mono',monospace;font-size:.55rem;font-weight:700;padding:.18rem .5rem;letter-spacing:.06em}
+.dash-tabs-inner{display:flex;background:#141a27;border-bottom:1px solid rgba(255,255,255,.06)}
+.dti{padding:.5rem .9rem;font-family:'JetBrains Mono',monospace;font-size:.58rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--smoke3);cursor:pointer;transition:all .15s;border-right:1px solid rgba(255,255,255,.04)}
+.dti:last-child{border-right:none}
+.dti.on{background:rgba(201,169,110,.12);color:var(--gold)}
+.dash-body{padding:12px}
+.dash-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px}
+.dk{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);padding:8px 6px;text-align:center}
+.dk-n{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700;color:var(--gold);line-height:1}
+.dk-l{font-family:'JetBrains Mono',monospace;font-size:.48rem;color:var(--smoke);text-transform:uppercase;letter-spacing:.06em;margin-top:.15rem}
+.dk-d{font-size:.52rem;color:var(--green);font-weight:600;margin-top:.1rem}
+.dash-chart-title{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--smoke);letter-spacing:.08em;text-transform:uppercase;margin-bottom:7px;font-weight:500}
+/* Bar chart */
+.bar-chart{display:flex;flex-direction:column;gap:5px}
+.bc-row{display:flex;align-items:center;gap:6px}
+.bc-label{font-family:'JetBrains Mono',monospace;font-size:.55rem;color:var(--smoke2);width:22px;flex-shrink:0;font-weight:600}
+.bc-track{flex:1;height:14px;background:rgba(255,255,255,.04);border-radius:1px;position:relative;overflow:hidden}
+.bc-fill{height:100%;border-radius:1px;position:absolute;left:0;top:0;display:flex;align-items:center;padding-left:5px}
+.bc-val{font-family:'JetBrains Mono',monospace;font-size:.52rem;font-weight:700;color:var(--ink)}
+.bc-num{font-family:'JetBrains Mono',monospace;font-size:.55rem;font-weight:700;color:var(--smoke2);width:30px;text-align:right;flex-shrink:0}
+/* Progress bars */
+.prog-chart{display:flex;flex-direction:column;gap:6px}
+.pc-row{display:flex;align-items:center;gap:6px}
+.pc-label{font-size:.58rem;color:var(--smoke);width:120px;flex-shrink:0;font-weight:400}
+.pc-track{flex:1;height:5px;background:rgba(255,255,255,.07);border-radius:2px}
+.pc-fill{height:100%;border-radius:2px}
+.pc-val{font-family:'JetBrains Mono',monospace;font-size:.55rem;color:var(--smoke2);width:32px;text-align:right;flex-shrink:0}
+/* Status table */
+.status-table{width:100%;border-collapse:collapse}
+.status-table td{padding:5px 4px;font-size:.6rem;vertical-align:middle}
+.st-name{color:var(--smoke2);font-weight:400}
+.st-bar-wrap{width:90px}
+.st-bar-bg{height:4px;background:rgba(255,255,255,.07);border-radius:2px}
+.st-bar-fill{height:100%;border-radius:2px}
+.st-val{font-family:'JetBrains Mono',monospace;font-size:.55rem;font-weight:700}
+.dash-footer{background:#141a27;border-top:1px solid rgba(255,255,255,.05);padding:6px 12px;display:flex;justify-content:space-between}
+.df-text{font-family:'JetBrains Mono',monospace;font-size:.52rem;color:var(--smoke3);letter-spacing:.04em}
+
+/* Port info */
+.port-info{}
+.port-num{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--smoke3);margin-bottom:.5rem;letter-spacing:.08em}
+.port-title{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:400;color:var(--white);margin-bottom:.8rem;line-height:1.25}
+.port-desc{font-size:.82rem;line-height:1.7;color:rgba(248,246,241,.6);margin-bottom:1.2rem}
+.port-tags{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:1.2rem}
+.port-tag{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--smoke);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);padding:.18rem .5rem}
+.port-facts{border-top:1px solid var(--border);padding-top:1rem;display:flex;flex-direction:column;gap:.5rem}
+.pf{font-size:.78rem;color:rgba(248,246,241,.55);padding-left:1rem;position:relative;line-height:1.55}
+.pf::before{content:'▸';position:absolute;left:0;color:var(--gold);font-size:.62rem;top:.1rem}
+.pf strong{color:var(--gold2);font-weight:500}
+
+/* ─── EXPERTISE ──────────────────────────────────── */
+#services{background:var(--ink2)}
+.ex-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-top:3rem}
+.ex-card{background:var(--card);padding:2.2rem 2rem;transition:background .25s;position:relative;overflow:hidden}
+.ex-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--gold);transform:scaleX(0);transition:transform .3s;transform-origin:left}
+.ex-card:hover{background:var(--card2)}
+.ex-card:hover::after{transform:scaleX(1)}
+.ex-num{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--smoke3);margin-bottom:1rem;letter-spacing:.06em}
+.ex-icon{font-size:1.5rem;margin-bottom:.9rem}
+.ex-title{font-weight:700;font-size:.9rem;color:var(--gold2);margin-bottom:.55rem}
+.ex-desc{font-size:.78rem;color:var(--smoke);line-height:1.65;margin-bottom:1rem}
+.ex-tags{display:flex;flex-wrap:wrap;gap:.35rem}
+.ex-tag{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--gold);background:rgba(201,169,110,.08);border:1px solid var(--border);padding:.18rem .5rem}
+
+/* ─── HOW I WORK ─────────────────────────────────── */
+#howwork{background:var(--ink)}
+.hw-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-top:3rem}
+.hw-card{background:var(--card);padding:2rem 1.8rem;transition:background .25s}
+.hw-card:hover{background:var(--card2)}
+.hw-num{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--gold);margin-bottom:.8rem;opacity:.7}
+.hw-title{font-weight:700;font-size:.88rem;color:var(--white);margin-bottom:.5rem}
+.hw-desc{font-size:.78rem;color:var(--smoke);line-height:1.7}
+
+/* ─── ABOUT ──────────────────────────────────────── */
+#about{background:var(--ink2)}
+.about-grid{display:grid;grid-template-columns:1fr 300px;gap:5rem;align-items:start}
+.about-quote{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-style:italic;line-height:1.72;color:var(--white);margin-bottom:2rem;padding-bottom:2rem;border-bottom:1px solid var(--border);padding-left:1.2rem;border-left:2px solid var(--gold)}
+.about-body{font-size:.88rem;line-height:1.8;color:rgba(248,246,241,.6);margin-bottom:1.5rem}
+.about-body strong{color:var(--gold2);font-weight:500}
+.about-cta{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--gold);letter-spacing:.08em;text-transform:uppercase}
+.timeline{border:1px solid var(--border)}
+.tl-item{padding:1.2rem 1.5rem;border-bottom:1px solid var(--border);transition:background .2s}
+.tl-item:last-child{border-bottom:none}
+.tl-item:hover{background:rgba(201,169,110,.04)}
+.tl-date{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--gold);opacity:.7;margin-bottom:.3rem}
+.tl-role{font-weight:700;font-size:.82rem;color:var(--white);margin-bottom:.2rem}
+.tl-co{font-size:.72rem;color:var(--smoke)}
+.cred-wrap{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:1.4rem}
+.cred-pill{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--smoke);background:rgba(255,255,255,.04);border:1px solid var(--border);padding:.28rem .6rem}
+.lang-wrap{margin-top:1.3rem;display:flex;flex-direction:column;gap:.9rem}
+.lang-row{display:flex;justify-content:space-between;margin-bottom:.3rem}
+.lang-name{font-size:.8rem;font-weight:600;color:var(--white)}
+.lang-level{font-size:.68rem;color:var(--smoke);font-family:'JetBrains Mono',monospace}
+.lang-track{height:2px;background:rgba(255,255,255,.08)}
+.lang-fill{height:100%;background:var(--gold)}
+
+/* ─── CONTACT ────────────────────────────────────── */
+#contact{background:var(--ink2);padding:6rem 5vw}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;max-width:1180px;margin:0 auto;align-items:start}
+.contact-headline{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:300;line-height:1.15;margin-bottom:1rem}
+.contact-headline em{font-style:italic;color:var(--gold)}
+.contact-sub{font-size:.88rem;color:var(--smoke);line-height:1.7;margin-bottom:2.5rem}
+.cf-form{display:flex;flex-direction:column;gap:.8rem}
+.cf-row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+.cf-form input,.cf-form textarea{background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--white);padding:.85rem 1rem;font-family:'DM Sans',sans-serif;font-size:.83rem;outline:none;resize:vertical;transition:border .2s}
+.cf-form input:focus,.cf-form textarea:focus{border-color:rgba(201,169,110,.4)}
+.cf-form input::placeholder,.cf-form textarea::placeholder{color:var(--smoke3)}
+.cf-btn{background:var(--gold);color:var(--ink);border:none;padding:.85rem 2rem;font-family:'DM Sans',sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:background .2s;align-self:flex-start;text-decoration:none;display:inline-block}
+.cf-btn:hover{background:var(--gold2)}
+.c-label{font-family:'JetBrains Mono',monospace;font-size:.6rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--smoke3);margin-bottom:.7rem;margin-top:1.5rem}
+.c-label:first-child{margin-top:0}
+.c-links{display:flex;flex-direction:column;gap:.5rem;margin-bottom:.5rem}
+.c-links a{font-size:.82rem;color:var(--white);text-decoration:none;opacity:.75;transition:opacity .2s}
+.c-links a:hover{opacity:1;color:var(--gold2)}
+.c-loc{font-size:.82rem;color:var(--smoke);line-height:1.75}
+.c-avail{display:inline-flex;align-items:center;gap:.5rem;margin-top:1.3rem;font-family:'JetBrains Mono',monospace;font-size:.65rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--green)}
+.c-dot{width:6px;height:6px;background:var(--green);border-radius:50%;animation:blink 2s ease infinite}
+
+/* ─── FOOTER ─────────────────────────────────────── */
+footer{background:var(--ink);border-top:1px solid var(--border2);padding:1.4rem 5vw;display:flex;justify-content:space-between;align-items:center}
+.fl{font-family:'Cormorant Garamond',serif;font-size:.88rem;color:rgba(248,246,241,.2)}
+.fr{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:rgba(248,246,241,.18);letter-spacing:.06em}
+
+/* ─── REVEAL ─────────────────────────────────────── */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .65s ease,transform .65s ease}
+.reveal.in{opacity:1;transform:none}
+
+/* ─── RESPONSIVE ─────────────────────────────────── */
+@media(max-width:960px){
+  nav{padding:0 1.5rem}
+  .nav-links,.lang-bar{display:none}
+  #hero{grid-template-columns:1fr;padding:6.5rem 1.5rem 3rem}
+  .hero-right{display:none}
+  section:not(#hero){padding:4rem 1.5rem}
+  .ex-grid,.hw-grid{grid-template-columns:1fr}
+  .port-slide.on,.about-grid,.contact-grid{grid-template-columns:1fr}
+  footer{flex-direction:column;gap:.4rem;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<div class="cur" id="cur"></div>
+<div class="cur-ring" id="curRing"></div>
+
+<!-- LANG SWITCHER -->
+<div class="lang-bar">
+  <button class="lb on" onclick="setLang('en')">EN</button>
+  <button class="lb" onclick="setLang('fr')">FR</button>
+  <button class="lb" onclick="setLang('de')">DE</button>
+  <button class="lb" onclick="setLang('nl')">NL</button>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div>
+    <span class="nav-logo">Ankit Parihar</span>
+    <span class="nav-sub" data-i18n="nav_sub">· Paris · CDI / Freelance</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#work" data-i18n="nav_work">Work</a></li>
+    <li><a href="#portfolio" data-i18n="nav_port">Portfolio</a></li>
+    <li><a href="#services" data-i18n="nav_exp">Expertise</a></li>
+    <li><a href="#about" data-i18n="nav_about">About</a></li>
+    <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
+  </ul>
+  <a href="mailto:parihara90@gmail.com" class="nav-cta" data-i18n="nav_cta">Hire Me</a>
+</nav>
+
+<!-- ── HERO ──────────────────────────────────────── -->
+<section id="hero">
+  <div class="hero-bg"></div><div class="hero-grid-lines"></div>
+  <div class="hero-left">
+    <div class="hero-eyebrow">
+      <div class="eyebrow-line"></div>
+      <div class="eyebrow-text" data-i18n="hero_eyebrow">Relocating · Immediate Availability</div>
+    </div>
+    <h1 class="hero-name">Ankit<br><strong>Parihar</strong></h1>
+    <p class="hero-role" data-i18n="hero_role">Senior Data &amp; Analytics Consultant · BI &amp; Platform Delivery Lead</p>
+    <p class="hero-stack">Power BI · Databricks · Azure · Snowflake · dbt</p>
+    <p class="hero-desc" data-i18n="hero_desc">9+ years delivering <strong>enterprise analytics platforms</strong> across Aviation, Financial Services, Pharma &amp; Luxury.<br><br>Proven track record of <strong>end-to-end analytics delivery</strong> — from raw data to C-suite intelligence.</p>
+    <div class="hero-actions">
+      <a href="#portfolio" class="btn-gold" data-i18n="btn_portfolio">View Portfolio</a>
+      <a href="mailto:parihara90@gmail.com" class="btn-outline" data-i18n="btn_contact">Get In Touch</a>
+    </div>
+    <div class="avail-badge"><span class="avail-dot"></span><span data-i18n="hero_avail">Available immediately · CDI / Freelance · Paris &amp; Europe · 10yr French resident</span></div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-photo-wrap">
+      <img id="hero-img" src="data:image/jpeg;base64,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" alt="Ankit Parihar">
+    </div>
+    <div class="stats-grid">
+      <div class="stat-box"><div class="stat-n">10yr</div><div class="stat-l" data-i18n="stat1">French Resident</div></div>
+      <div class="stat-box"><div class="stat-n">6</div><div class="stat-l" data-i18n="stat2">Tier-1 Clients</div></div>
+      <div class="stat-box"><div class="stat-n">9+</div><div class="stat-l" data-i18n="stat3">Years Exp.</div></div>
+      <div class="stat-box"><div class="stat-n">PL-300</div><div class="stat-l" data-i18n="stat4">Certified</div></div>
+    </div>
+    <div class="client-strip">
+      <div class="client-chip">Air France</div>
+      <div class="client-chip">AXA</div>
+      <div class="client-chip">Sanofi</div>
+      <div class="client-chip">Dior</div>
+      <div class="client-chip">Advarra</div>
+    </div>
+  </div>
+</section>
+<div class="hr-gold"></div>
+
+<!-- ── SELECTED WORK ──────────────────────────────── -->
+<section id="work">
+  <div class="section-inner reveal">
+    <div class="s-label" data-i18n="work_label">Selected Work</div>
+    <h2 class="s-title">Client <em data-i18n="work_title_em">outcomes</em></h2>
+    <table class="work-table">
+      <thead><tr>
+        <th>#</th><th data-i18n="th_client">Client</th><th data-i18n="th_sector">Sector</th>
+        <th data-i18n="th_eng">Engagement</th><th data-i18n="th_res">Result</th>
+      </tr></thead>
+      <tbody>
+        <tr><td><span class="row-num">01</span></td>
+          <td><div class="cl-name">Air France</div><div class="cl-sector">Aviation</div></td>
+          <td><span class="cl-sector">Aviation</span></td>
+          <td><span class="eng-text" data-i18n="w1_eng">Built and led 5-person BI team. Executive KPI framework (OTP, revenue, delay root-cause) adopted as airline-wide reporting standard.</span></td>
+          <td><span class="result-pill" data-i18n="w1r1">10–15 days → real-time</span><span class="result-pill" data-i18n="w1r2">60% time saved</span></td></tr>
+        <tr><td><span class="row-num">02</span></td>
+          <td><div class="cl-name">AXA Insurance</div><div class="cl-sector">Insurance</div></td>
+          <td><span class="cl-sector">Insurance</span></td>
+          <td><span class="eng-text" data-i18n="w2_eng">Architected Azure ETL and Power BI compliance platform. Restored real-time cyber threat and budget visibility across European operations.</span></td>
+          <td><span class="result-pill" data-i18n="w2r1">Manual work eliminated</span><span class="result-pill" data-i18n="w2r2">Real-time visibility</span></td></tr>
+        <tr><td><span class="row-num">03</span></td>
+          <td><div class="cl-name">Dior</div><div class="cl-sector">Luxury</div></td>
+          <td><span class="cl-sector">Luxury</span></td>
+          <td><span class="eng-text" data-i18n="w3_eng">Global brand intelligence programme. Power BI counterfeit trend platform with RLS access controls for strategic IP enforcement.</span></td>
+          <td><span class="result-pill" data-i18n="w3r1">Global adoption</span><span class="result-pill" data-i18n="w3r2">IP protection</span></td></tr>
+        <tr><td><span class="row-num">04</span></td>
+          <td><div class="cl-name">Sanofi</div><div class="cl-sector">Pharma</div></td>
+          <td><span class="cl-sector">Pharma</span></td>
+          <td><span class="eng-text" data-i18n="w4_eng">Governed IQVIA vendor data quality. Power BI KPI platform restoring commercial visibility for global sales leadership across multi-region MDM.</span></td>
+          <td><span class="result-pill" data-i18n="w4r1">Multi-region visibility</span><span class="result-pill" data-i18n="w4r2">MDM governance</span></td></tr>
+        <tr><td><span class="row-num">05</span></td>
+          <td><div class="cl-name">Advarra</div><div class="cl-sector">Clinical Research</div></td>
+          <td><span class="cl-sector">Clinical Research</span></td>
+          <td><span class="eng-text" data-i18n="w5_eng">Directed Oracle SQL → Databricks migration. Delivered 3 Sigma BI suites on Snowflake/dbt. Full cloud-native analytics stack.</span></td>
+          <td><span class="result-pill" data-i18n="w5r1">Legacy eliminated</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+<div class="hr-gold"></div>
+
+<!-- ── DASHBOARD PORTFOLIO ────────────────────────── -->
+<section id="portfolio">
+  <div class="section-inner reveal">
+    <div class="s-label" data-i18n="port_label">Dashboard Portfolio</div>
+    <h2 class="s-title" data-i18n="port_title">Built with <em>real data.</em> Shown with dummy.</h2>
+    <p class="s-sub" data-i18n="port_sub">Three enterprise Power BI platforms delivered across Aviation and Insurance. Click tabs to explore each dashboard.</p>
+
+    <div class="port-tabs">
+      <button class="port-tab on" onclick="showPort(0)">Qatar Airways</button>
+      <button class="port-tab" onclick="showPort(1)">Air France</button>
+      <button class="port-tab" onclick="showPort(2)">AXA Insurance</button>
+    </div>
+
+    <!-- ── SLIDE 1: Qatar Airways ──────────────────── -->
+    <div class="port-slide on" id="p0">
+      <div class="dash-frame">
+        <div class="dash-bar">
+          <span class="dash-bar-title">Qatar Airways · Capacity Recovery &amp; Competitor Benchmark</span>
+          <span class="dash-live">LIVE DATA</span>
+        </div>
+        <div class="dash-tabs-inner">
+          <div class="dti on">Executive Overview</div>
+          <div class="dti">Competitor Benchmarking</div>
+          <div class="dti">Route Analysis</div>
+        </div>
+        <div class="dash-body">
+          <div class="dash-kpis">
+            <div class="dk"><div class="dk-n">121.6%</div><div class="dk-l">ASK Recovery</div><div class="dk-d">▲ +4.2%</div></div>
+            <div class="dk"><div class="dk-n">452K</div><div class="dk-l">Flights</div><div class="dk-d" style="color:var(--smoke)">EK·QR·TK·EY</div></div>
+            <div class="dk"><div class="dk-n">116M</div><div class="dk-l">Seats</div><div class="dk-d">▲ All exceeded</div></div>
+            <div class="dk"><div class="dk-n">Q3'23</div><div class="dk-l">Period</div><div class="dk-d" style="color:var(--smoke)">vs 2019</div></div>
+          </div>
+          <div class="dash-chart-title">ASK Recovery by Airline vs 2019 Baseline (%)</div>
+          <div class="bar-chart">
+            <div class="bc-row"><span class="bc-label">EK</span><div class="bc-track"><div class="bc-fill" style="width:85%;background:var(--gold)"><span class="bc-val">112%</span></div></div><span class="bc-num" style="color:var(--gold)">112%</span></div>
+            <div class="bc-row"><span class="bc-label">QR</span><div class="bc-track"><div class="bc-fill" style="width:93%;background:var(--green)"><span class="bc-val" style="color:#fff">122%</span></div></div><span class="bc-num" style="color:var(--green)">122%</span></div>
+            <div class="bc-row"><span class="bc-label">TK</span><div class="bc-track"><div class="bc-fill" style="width:91%;background:#7a8395"><span class="bc-val" style="color:#fff">119%</span></div></div><span class="bc-num">119%</span></div>
+            <div class="bc-row"><span class="bc-label">EY</span><div class="bc-track"><div class="bc-fill" style="width:99%;background:#3a4a6b"><span class="bc-val" style="color:#fff">130%</span></div></div><span class="bc-num">130%</span></div>
+          </div>
+        </div>
+        <div class="dash-footer">
+          <span class="df-text">Filters: All Airlines · All Regions · YTD 2023</span>
+          <span class="df-text">Power BI · DAX · Aviation Analytics</span>
+        </div>
+      </div>
+      <div class="port-info">
+        <div class="port-num">Dashboard 01 / 03 · Aviation</div>
+        <div class="port-title" data-i18n="p1_title">Qatar Airways — Capacity Recovery &amp; Competitor Benchmark</div>
+        <div class="port-desc" data-i18n="p1_desc">A 3-page Power BI platform for airline leadership tracking post-COVID ASK capacity recovery vs. key competitors. Executive KPIs, competitor market share benchmarking, and global route capacity analysis — all filterable by date, airline, region, and aircraft type.</div>
+        <div class="port-tags"><span class="port-tag">Power BI</span><span class="port-tag">Aviation</span><span class="port-tag">DAX</span><span class="port-tag">KPI Design</span><span class="port-tag">Competitor Intel</span></div>
+        <div class="port-facts">
+          <div class="pf"><strong>452K flights &amp; 116M seats</strong> analysed across EK, QR, TK &amp; EY benchmark airlines</div>
+          <div class="pf">Recovery to <strong>121.57% of pre-COVID ASK</strong> — all 4 carriers exceeded 2019 baseline</div>
+          <div class="pf"><strong>3 interactive pages</strong> with cross-filter drill-through and date slicer</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── SLIDE 2: Air France ─────────────────────── -->
+    <div class="port-slide" id="p1">
+      <div class="dash-frame">
+        <div class="dash-bar">
+          <span class="dash-bar-title">Air France · Centralized Operations &amp; Performance BI</span>
+          <span class="dash-live">LIVE DATA</span>
+        </div>
+        <div class="dash-tabs-inner">
+          <div class="dti on">Operations Overview</div>
+          <div class="dti">Sales &amp; Revenue</div>
+          <div class="dti">Customer Satisfaction</div>
+        </div>
+        <div class="dash-body">
+          <div class="dash-kpis">
+            <div class="dk"><div class="dk-n">98.2%</div><div class="dk-l">OTP</div><div class="dk-d">▲ +1.4% MoM</div></div>
+            <div class="dk"><div class="dk-n">↓60%</div><div class="dk-l">Report Time</div><div class="dk-d">15d → daily</div></div>
+            <div class="dk"><div class="dk-n">3</div><div class="dk-l">RLS Views</div><div class="dk-d" style="color:var(--smoke)">Exec·Mgr·Sales</div></div>
+            <div class="dk"><div class="dk-n">4.8★</div><div class="dk-l">CSAT</div><div class="dk-d">▲ +0.3 QoQ</div></div>
+          </div>
+          <div class="dash-chart-title">Key Performance Metrics</div>
+          <div class="prog-chart">
+            <div class="pc-row"><span class="pc-label">On-Time Performance</span><div class="pc-track"><div class="pc-fill" style="width:98%;background:var(--green)"></div></div><span class="pc-val" style="color:var(--green)">98.2%</span></div>
+            <div class="pc-row"><span class="pc-label">Revenue vs Target</span><div class="pc-track"><div class="pc-fill" style="width:91%;background:var(--gold)"></div></div><span class="pc-val" style="color:var(--gold)">91%</span></div>
+            <div class="pc-row"><span class="pc-label">CSAT Score</span><div class="pc-track"><div class="pc-fill" style="width:87%;background:#7a8395"></div></div><span class="pc-val">87%</span></div>
+            <div class="pc-row"><span class="pc-label">Delay Root-Cause Coverage</span><div class="pc-track"><div class="pc-fill" style="width:94%;background:#3a4a6b"></div></div><span class="pc-val">94%</span></div>
+            <div class="pc-row"><span class="pc-label">Data Freshness</span><div class="pc-track"><div class="pc-fill" style="width:100%;background:var(--green)"></div></div><span class="pc-val" style="color:var(--green)">Daily</span></div>
+          </div>
+        </div>
+        <div class="dash-footer">
+          <span class="df-text">Role: Executive View · SQL Server DWH · SSIS ETL · Star Schema</span>
+          <span class="df-text">Airline-wide reporting standard</span>
+        </div>
+      </div>
+      <div class="port-info">
+        <div class="port-num">Dashboard 02 / 03 · Aviation</div>
+        <div class="port-title" data-i18n="p2_title">Air France — Centralized Operations &amp; Performance BI</div>
+        <div class="port-desc" data-i18n="p2_desc">3-page enterprise Power BI platform unifying Air France's fragmented data across flight operations, ticket sales, and customer feedback. Built on SQL Server DWH with SSIS ETL and dimensional star schema — replacing siloed department reporting with a single source of truth.</div>
+        <div class="port-tags"><span class="port-tag">Power BI</span><span class="port-tag">SQL Server DWH</span><span class="port-tag">SSIS ETL</span><span class="port-tag">Star Schema</span><span class="port-tag">RLS</span><span class="port-tag">DAX</span></div>
+        <div class="port-facts">
+          <div class="pf"><strong>Reporting cycle cut 60%</strong> — multi-day manual consolidation to daily automated refresh</div>
+          <div class="pf"><strong>3 role-based views via RLS</strong> — Executives, Regional Managers, Sales Teams</div>
+          <div class="pf">Adopted as <strong>airline-wide reporting standard</strong> across all business units</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── SLIDE 3: AXA ────────────────────────────── -->
+    <div class="port-slide" id="p2">
+      <div class="dash-frame">
+        <div class="dash-bar">
+          <span class="dash-bar-title">AXA Insurance · Compliance &amp; Risk Platform</span>
+          <span class="dash-live">LIVE DATA</span>
+        </div>
+        <div class="dash-body" style="padding-top:14px">
+          <div class="dash-kpis">
+            <div class="dk"><div class="dk-n" style="color:var(--green)">RT</div><div class="dk-l">Cyber Visibility</div><div class="dk-d">● Live feed</div></div>
+            <div class="dk"><div class="dk-n">0</div><div class="dk-l">Manual Steps</div><div class="dk-d">Fully automated</div></div>
+            <div class="dk"><div class="dk-n">98%</div><div class="dk-l">SLA Compliance</div><div class="dk-d">▲ +12%</div></div>
+            <div class="dk"><div class="dk-n">EU</div><div class="dk-l">Coverage</div><div class="dk-d" style="color:var(--smoke)">All entities</div></div>
+          </div>
+          <div class="dash-chart-title">Compliance Status by Category</div>
+          <table class="status-table">
+            <tr><td class="st-name">Cyber Threat Real-Time Monitor</td><td class="st-bar-wrap"><div class="st-bar-bg"><div class="st-bar-fill" style="width:100%;background:var(--green)"></div></div></td><td><span class="st-val" style="color:var(--green)">Live</span></td></tr>
+            <tr><td class="st-name">Budget Visibility Pipeline</td><td class="st-bar-wrap"><div class="st-bar-bg"><div class="st-bar-fill" style="width:100%;background:var(--green)"></div></div></td><td><span class="st-val" style="color:var(--green)">Live</span></td></tr>
+            <tr><td class="st-name">SLA Breach Alert Engine</td><td class="st-bar-wrap"><div class="st-bar-bg"><div class="st-bar-fill" style="width:98%;background:var(--gold)"></div></div></td><td><span class="st-val" style="color:var(--gold)">98%</span></td></tr>
+            <tr><td class="st-name">Incident Trend Analysis</td><td class="st-bar-wrap"><div class="st-bar-bg"><div class="st-bar-fill" style="width:94%;background:#7a8395"></div></div></td><td><span class="st-val">94%</span></td></tr>
+            <tr><td class="st-name">Report Automation (VBA→JSON)</td><td class="st-bar-wrap"><div class="st-bar-bg"><div class="st-bar-fill" style="width:100%;background:var(--green)"></div></div></td><td><span class="st-val" style="color:var(--green)">100%</span></td></tr>
+          </table>
+        </div>
+        <div class="dash-footer">
+          <span class="df-text">Azure ETL Pipeline · Power BI · VBA→JSON automation</span>
+          <span class="df-text">European operations · Multi-day → real-time</span>
+        </div>
+      </div>
+      <div class="port-info">
+        <div class="port-num">Dashboard 03 / 03 · Insurance</div>
+        <div class="port-title" data-i18n="p3_title">AXA Insurance — Compliance &amp; Risk Platform</div>
+        <div class="port-desc" data-i18n="p3_desc">Azure ETL pipeline and Power BI compliance platform for AXA's European operations. VBA-to-JSON automation restored real-time cyber threat and budget visibility, eliminating multi-day manual consolidation across business units.</div>
+        <div class="port-tags"><span class="port-tag">Power BI</span><span class="port-tag">Azure Data Factory</span><span class="port-tag">Python</span><span class="port-tag">VBA→JSON</span><span class="port-tag">Compliance</span></div>
+        <div class="port-facts">
+          <div class="pf"><strong>Multi-day manual process eliminated</strong> — replaced with automated daily pipeline</div>
+          <div class="pf"><strong>Real-time cyber threat visibility</strong> restored across all European security operations</div>
+          <div class="pf"><strong>VBA-to-JSON migration</strong> modernised legacy reporting infrastructure end-to-end</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="hr-gold"></div>
+
+<!-- ── EXPERTISE ──────────────────────────────────── -->
+<section id="services">
+  <div class="section-inner reveal">
+    <div class="s-label" data-i18n="ex_label">Core Capabilities</div>
+    <h2 class="s-title">Areas of <em data-i18n="ex_title_em">expertise</em></h2>
+    <div class="ex-grid">
+      <div class="ex-card"><div class="ex-num">01</div><div class="ex-icon">📊</div><div class="ex-title" data-i18n="ex1_t">BI & Dashboard Development</div><div class="ex-desc" data-i18n="ex1_d">Executive-grade Power BI platforms. Advanced DAX, RLS, real-time pipelines. From raw data to intelligence that drives C-suite decisions.</div><div class="ex-tags"><span class="ex-tag">Power BI</span><span class="ex-tag">DAX</span><span class="ex-tag">Databricks</span><span class="ex-tag">Snowflake</span></div></div>
+      <div class="ex-card"><div class="ex-num">02</div><div class="ex-icon">☁️</div><div class="ex-title" data-i18n="ex2_t">Data Engineering</div><div class="ex-desc" data-i18n="ex2_d">End-to-end pipeline architecture. Azure Data Factory, dbt, Databricks, Snowflake. Cloud-native infrastructure built to scale.</div><div class="ex-tags"><span class="ex-tag">Azure ADF</span><span class="ex-tag">dbt</span><span class="ex-tag">SQL</span><span class="ex-tag">Python</span></div></div>
+      <div class="ex-card"><div class="ex-num">03</div><div class="ex-icon">🤝</div><div class="ex-title" data-i18n="ex3_t">Programme Management</div><div class="ex-desc" data-i18n="ex3_d">C-suite steering, milestone governance, cross-functional delivery. Multiple stakeholders across international teams simultaneously.</div><div class="ex-tags"><span class="ex-tag">PMO</span><span class="ex-tag">Agile</span><span class="ex-tag">SAFe</span><span class="ex-tag">JIRA</span></div></div>
+    </div>
+  </div>
+</section>
+<div class="hr-gold"></div>
+
+<!-- ── HOW I WORK ─────────────────────────────────── -->
+<section id="howwork">
+  <div class="section-inner reveal">
+    <div class="s-label" data-i18n="hw_label">How I Work</div>
+    <h2 class="s-title">Inside an <em data-i18n="hw_title_em">organisation</em></h2>
+    <p class="s-sub" data-i18n="hw_intro">I work as an embedded team member, not a detached external. My approach is built around structured governance, radical transparency with leadership, and leaving things better than I found them.</p>
+    <div class="hw-grid">
+      <div class="hw-card"><div class="hw-num">01 —</div><div class="hw-title" data-i18n="hw1_t">Executive alignment</div><div class="hw-desc" data-i18n="hw1_d">I join at the steering level. Weekly reporting to C-suite, clear milestone ownership, and proactive escalation — not just delivery. Leadership always knows where things stand.</div></div>
+      <div class="hw-card"><div class="hw-num">02 —</div><div class="hw-title" data-i18n="hw2_t">Cross-functional coordination</div><div class="hw-desc" data-i18n="hw2_d">I coordinate across data engineering, business owners, and IT teams simultaneously. Built for the complexity of multiple stakeholders across international operations.</div></div>
+      <div class="hw-card"><div class="hw-num">03 —</div><div class="hw-title" data-i18n="hw3_t">Technical depth</div><div class="hw-desc" data-i18n="hw3_d">I can sit with your data engineers in the morning and present to your CFO in the afternoon. No translation layer needed between the pipeline and the boardroom.</div></div>
+      <div class="hw-card"><div class="hw-num">04 —</div><div class="hw-title" data-i18n="hw4_t">Sustainable handover</div><div class="hw-desc" data-i18n="hw4_d">Every system I build comes with documentation, trained teams, and governance standards that outlast my tenure. Organisations I leave are more capable than when I arrived.</div></div>
+    </div>
+  </div>
+</section>
+<div class="hr-gold"></div>
+
+<!-- ── ABOUT ──────────────────────────────────────── -->
+<section id="about">
+  <div class="section-inner reveal">
+    <div class="s-label" data-i18n="about_label">About</div>
+    <div class="about-grid">
+      <div>
+        <div class="about-quote" data-i18n="about_quote">"I can sit with your data engineers in the morning and present executive dashboards to your C-suite in the afternoon. Most consultants do one or the other."</div>
+        <p class="about-body" data-i18n="about_intro">Led enterprise-level data initiatives impacting operations, strategy, and decision-making across global teams in 5 industries.</p>
+        <p class="about-body" data-i18n="about_body">I'm <strong>Ankit Parihar</strong> — a Programme Manager and Data Transformation Leader with nine years of international consulting experience in Paris, across Aviation, Insurance, Pharma and Luxury.<br><br>I hold an <strong>MSc in Big Data, Marketing & Management from Toulouse Business School</strong> (GPA 3.8, Top 1% worldwide), am a <strong>Microsoft Power BI PL-300 certified analyst</strong>, a <strong>10-year French resident</strong> based in Paris, and bilingual in <strong>English & French (DELF B1)</strong>.</p>
+        <p class="about-cta" data-i18n="about_cta">Actively seeking Senior Data & Analytics / Programme Manager roles · CDI / Freelance · Paris & Europe · Immediate availability</p>
+      </div>
+      <div id="experience">
+        <div class="timeline">
+          <div class="tl-item"><div class="tl-date">2025–2026</div><div class="tl-role" data-i18n="tl1r">Lead Data & Analytics Consultant</div><div class="tl-co">Iris Software · Advarra · Remote</div></div>
+          <div class="tl-item"><div class="tl-date">2020–2025</div><div class="tl-role" data-i18n="tl2r">Senior Data Consultant — Programme Delivery</div><div class="tl-co">Cognizant · Air France, AXA, Sanofi, Dior · Paris</div></div>
+          <div class="tl-item"><div class="tl-date">2019–2020</div><div class="tl-role" data-i18n="tl3r">Data Analyst Intern</div><div class="tl-co">Liebherr Aerospace · Toulouse</div></div>
+          <div class="tl-item"><div class="tl-date">2015–2018</div><div class="tl-role" data-i18n="tl4r">Associate Consultant</div><div class="tl-co">Capgemini · Société Générale · Bangalore</div></div>
+        </div>
+        <div class="cred-wrap">
+          <span class="cred-pill">Power BI PL-300</span><span class="cred-pill">Dataiku Certified</span>
+          <span class="cred-pill">DELF B1 French</span><span class="cred-pill">MSc GPA 3.8</span><span class="cred-pill">10yr French PR</span>
+        </div>
+        <div class="lang-wrap">
+          <div><div class="lang-row"><span class="lang-name">English</span><span class="lang-level" data-i18n="l1">Fluent</span></div><div class="lang-track"><div class="lang-fill" style="width:100%"></div></div></div>
+          <div><div class="lang-row"><span class="lang-name">French</span><span class="lang-level">B1 Certified</span></div><div class="lang-track"><div class="lang-fill" style="width:65%"></div></div></div>
+          <div><div class="lang-row"><span class="lang-name">Hindi</span><span class="lang-level" data-i18n="l3">Native</span></div><div class="lang-track"><div class="lang-fill" style="width:100%"></div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="hr-gold"></div>
+
+<!-- ── CONTACT ────────────────────────────────────── -->
+<section id="contact">
+  <div class="contact-grid">
+    <div class="reveal">
+      <div class="s-label" data-i18n="c_label">Get In Touch</div>
+      <h2 class="contact-headline" data-i18n="c_headline">Let's solve a real <em>business problem.</em></h2>
+      <p class="contact-sub" data-i18n="c_sub">Available immediately for senior data & analytics and programme management roles across France and Europe. CDI, freelance, or consulting welcome.</p>
+      <div class="cf-form">
+        <div class="cf-row">
+          <input type="text" data-i18n-ph="c_name" placeholder="Name">
+          <input type="text" data-i18n-ph="c_company" placeholder="Company">
+        </div>
+        <input type="email" placeholder="Email">
+        <textarea rows="4" data-i18n-ph="c_msg" placeholder="Tell me about the role or opportunity"></textarea>
+        <a href="mailto:parihara90@gmail.com" class="cf-btn" data-i18n="c_send">Send message</a>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="c-label" data-i18n="c_direct">Direct contact</div>
+      <div class="c-links">
+        <a href="mailto:parihara90@gmail.com">parihara90@gmail.com</a>
+        <a href="tel:+33768604732">+33 768 604 732</a>
+        <a href="https://linkedin.com/in/futureishere" target="_blank">linkedin.com/in/futureishere</a>
+      </div>
+      <div class="c-label" data-i18n="c_loc_label">Location</div>
+      <div class="c-loc" data-i18n="c_loc">Paris, France<br><br>Available across France & Europe.<br>On-site, hybrid or full remote.</div>
+      <div class="c-avail"><span class="c-dot"></span><span data-i18n="c_avail_text">Available — immediate start</span></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="fl">Ankit Parihar · Programme Manager · Data & Analytics · Paris, France</div>
+  <div class="fr">linkedin.com/in/futureishere</div>
+</footer>
+
+<script>
+// ── CURSOR ────────────────────────────────────────
+const cur=document.getElementById('cur'),ring=document.getElementById('curRing');
+document.addEventListener('mousemove',e=>{
+  cur.style.left=e.clientX+'px'; cur.style.top=e.clientY+'px';
+  setTimeout(()=>{ring.style.left=e.clientX+'px';ring.style.top=e.clientY+'px'},80);
+});
+
+// ── SCROLL REVEAL ─────────────────────────────────
+const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+
+// ── PORTFOLIO TABS ────────────────────────────────
+function showPort(n){
+  document.querySelectorAll('.port-slide').forEach((s,i)=>s.classList.toggle('on',i===n));
+  document.querySelectorAll('.port-tab').forEach((t,i)=>t.classList.toggle('on',i===n));
+}
+
+// ── TRANSLATIONS ──────────────────────────────────
+const T={
+  en:{
+    nav_sub:'· Paris · CDI / Freelance', nav_work:'Work', nav_port:'Portfolio', nav_exp:'Expertise', nav_about:'About', nav_contact:'Contact', nav_cta:'Hire Me',
+    hero_eyebrow:'Paris, France · Immediate Availability',
+    hero_role:'Senior Data & Analytics Consultant · BI & Platform Delivery Lead',
+    hero_desc:'9+ years delivering <strong>enterprise analytics platforms</strong> across Aviation, Financial Services, Pharma & Luxury.<br><br>Proven track record of <strong>end-to-end analytics delivery</strong> — from raw data to C-suite intelligence.',
+    btn_portfolio:'View Portfolio', btn_contact:'Get In Touch',
+    hero_avail:'Available immediately · CDI / Freelance · Paris & Europe · 10yr French resident',
+    stat1:'French Resident', stat2:'Tier-1 Clients', stat3:'Years Exp.', stat4:'Certified',
+    work_label:'Selected Work', work_title_em:'outcomes',
+    th_client:'Client', th_sector:'Sector', th_eng:'Engagement', th_res:'Result',
+    w1_eng:'Built and led 5-person BI team. Executive KPI framework (OTP, revenue, delay root-cause) adopted as airline-wide reporting standard.',
+    w1r1:'10–15 days → real-time', w1r2:'60% time saved',
+    w2_eng:'Architected Azure ETL and Power BI compliance platform. Restored real-time cyber threat and budget visibility across European operations.',
+    w2r1:'Manual work eliminated', w2r2:'Real-time visibility',
+    w3_eng:'Global brand intelligence programme. Power BI counterfeit trend platform with RLS access controls for strategic IP enforcement.',
+    w3r1:'Global adoption', w3r2:'IP protection',
+    w4_eng:'Governed IQVIA vendor data quality. Power BI KPI platform restoring commercial visibility for global sales leadership across multi-region MDM.',
+    w4r1:'Multi-region visibility', w4r2:'MDM governance',
+    w5_eng:'Directed Oracle SQL → Databricks migration. Delivered 3 Sigma BI suites on Snowflake/dbt. Full cloud-native analytics stack.',
+    w5r1:'Legacy eliminated',
+    port_label:'Dashboard Portfolio', port_title:'Built with <em>real data.</em> Shown with dummy.',
+    port_sub:'Three enterprise Power BI platforms delivered across Aviation and Insurance. Click tabs to explore each dashboard.',
+    p1_title:'Qatar Airways — Capacity Recovery & Competitor Benchmark',
+    p1_desc:'A 3-page Power BI platform for airline leadership tracking post-COVID ASK capacity recovery vs. key competitors. Executive KPIs, competitor market share benchmarking, and global route capacity analysis — all filterable by date, airline, region, and aircraft type.',
+    p2_title:'Air France — Centralized Operations & Performance BI',
+    p2_desc:'3-page enterprise Power BI platform unifying Air France\'s fragmented data across flight operations, ticket sales, and customer feedback. Built on SQL Server DWH with SSIS ETL and dimensional star schema.',
+    p3_title:'AXA Insurance — Compliance & Risk Platform',
+    p3_desc:'Azure ETL pipeline and Power BI compliance platform for AXA\'s European operations. VBA-to-JSON automation restored real-time cyber threat and budget visibility, eliminating multi-day manual consolidation.',
+    ex_label:'Core Capabilities', ex_title_em:'expertise',
+    ex1_t:'BI & Dashboard Development', ex1_d:"Executive-grade Power BI platforms. Advanced DAX, RLS, real-time pipelines. From raw data to intelligence that drives C-suite decisions.",
+    ex2_t:'Data Engineering', ex2_d:'End-to-end pipeline architecture. Azure Data Factory, dbt, Databricks, Snowflake. Cloud-native infrastructure built to scale.',
+    ex3_t:'Programme Management', ex3_d:'C-suite steering, milestone governance, cross-functional delivery. Multiple stakeholders across international teams simultaneously.',
+    hw_label:'How I Work', hw_title_em:'organisation',
+    hw_intro:"I work as an embedded team member, not a detached external. My approach is built around structured governance, radical transparency with leadership, and leaving things better than I found them.",
+    hw1_t:'Executive alignment', hw1_d:'I join at the steering level. Weekly reporting to C-suite, clear milestone ownership, and proactive escalation — not just delivery. Leadership always knows where things stand.',
+    hw2_t:'Cross-functional coordination', hw2_d:'I coordinate across data engineering, business owners, and IT teams simultaneously. Built for the complexity of multiple stakeholders across international operations.',
+    hw3_t:'Technical depth', hw3_d:'I can sit with your data engineers in the morning and present to your CFO in the afternoon. No translation layer needed between the pipeline and the boardroom.',
+    hw4_t:'Sustainable handover', hw4_d:'Every system I build comes with documentation, trained teams, and governance standards that outlast my tenure. Organisations I leave are more capable than when I arrived.',
+    about_label:'About', about_quote:'"I can sit with your data engineers in the morning and present executive dashboards to your C-suite in the afternoon. Most consultants do one or the other."',
+    about_intro:'Led enterprise-level data initiatives impacting operations, strategy, and decision-making across global teams in 5 industries.',
+    about_body:'I\'m <strong>Ankit Parihar</strong> — a Programme Manager and Data Transformation Leader with nine years of international consulting experience in Paris, across Aviation, Insurance, Pharma and Luxury.<br><br>I hold an <strong>MSc in Big Data, Marketing & Management from Toulouse Business School</strong> (GPA 3.8, Top 1% worldwide), am a <strong>Microsoft Power BI PL-300 certified analyst</strong>, a <strong>10-year French resident</strong> based in Paris, and bilingual in <strong>English & French (DELF B1)</strong>.',
+    about_cta:'Actively seeking Senior Data & Analytics / Programme Manager roles · CDI / Freelance · Paris & Europe · Immediate availability',
+    tl1r:'Lead Data & Analytics Consultant', tl2r:'Senior Data Consultant — Programme Delivery', tl3r:'Data Analyst Intern', tl4r:'Associate Consultant',
+    l1:'Fluent', l3:'Native',
+    c_label:'Get In Touch', c_headline:'Let\'s solve a real <em>business problem.</em>',
+    c_sub:'Available immediately for senior data & analytics and programme management roles across France and Europe. CDI, freelance, or consulting welcome.',
+    c_name:'Name', c_company:'Company', c_msg:'Tell me about the role or opportunity', c_send:'Send message',
+    c_direct:'Direct contact', c_loc_label:'Location',
+    c_loc:'Paris, France<br><br>Available across France & Europe.<br>On-site, hybrid or full remote.',
+    c_avail_text:'Available — immediate start',
+  },
+  fr:{
+    nav_sub:'· Paris · CDI / Freelance', nav_work:'Réalisations', nav_port:'Portfolio', nav_exp:'Expertise', nav_about:'À propos', nav_contact:'Contact', nav_cta:'Me contacter',
+    hero_eyebrow:'Paris, France · Disponibilité immédiate',
+    hero_role:'Consultant Senior Data & Analytics · Lead BI & Platform Delivery',
+    hero_desc:'9+ ans de livraison de <strong>plateformes analytics d\'entreprise</strong> dans l\'Aviation, la Finance, la Pharma & le Luxe.<br><br>Expertise prouvée en <strong>livraison analytics end-to-end</strong> — de la donnée brute à l\'intelligence COMEX.',
+    btn_portfolio:'Voir le Portfolio', btn_contact:'Me contacter',
+    hero_avail:'Disponible immédiatement · CDI / Freelance · Paris & Europe · Résident français depuis 10 ans',
+    stat1:'Résident France', stat2:'Clients Tier-1', stat3:'Ans d\'expérience', stat4:'Certifié',
+    work_label:'Réalisations', work_title_em:'clients',
+    th_client:'Client', th_sector:'Secteur', th_eng:'Mission', th_res:'Résultat',
+    w1_eng:'Constitué et dirigé une équipe BI de 5 personnes. Cadre KPI exécutif adopté comme standard de reporting à l\'échelle de la compagnie.',
+    w1r1:'10–15 jours → temps réel', w1r2:'60% de temps économisé',
+    w2_eng:'Architecture pipeline Azure ETL et plateforme Power BI conformité. Restauré la visibilité temps réel des cyber-menaces et budgets pour les opérations européennes.',
+    w2r1:'Travail manuel éliminé', w2r2:'Visibilité temps réel',
+    w3_eng:'Programme de brand intelligence mondial. Plateforme Power BI suivi des contrefaçons avec contrôles RLS pour la protection des droits IP.',
+    w3r1:'Adoption mondiale', w3r2:'Protection IP',
+    w4_eng:'Gouvernance qualité des données fournisseur IQVIA. Plateforme KPI Power BI restaurant la visibilité commerciale pour la direction des ventes mondiale.',
+    w4r1:'Visibilité multi-régions', w4r2:'Gouvernance MDM',
+    w5_eng:'Piloté la migration Oracle SQL → Databricks. Livré 3 suites BI Sigma sur Snowflake/dbt. Stack analytics 100% cloud-native.',
+    w5r1:'Legacy éliminé',
+    port_label:'Portfolio Dashboards', port_title:'Construit avec de <em>vraies données.</em> Illustré avec des données fictives.',
+    port_sub:'Trois plateformes Power BI d\'entreprise livrées dans l\'Aviation et l\'Assurance. Cliquez sur les onglets pour explorer.',
+    p1_title:'Qatar Airways — Reprise des Capacités & Benchmark Concurrentiel',
+    p1_desc:'Plateforme Power BI 3 pages pour le leadership compagnie, suivi de la reprise post-COVID des ASK vs concurrents. KPIs exécutifs, benchmarking parts de marché et analyse des routes mondiales.',
+    p2_title:'Air France — BI Centralisée Opérations & Performance',
+    p2_desc:'Plateforme Power BI d\'entreprise 3 pages unifiant les données fragmentées d\'Air France sur les opérations, les ventes et la satisfaction client. DWH SQL Server avec ETL SSIS et schéma en étoile.',
+    p3_title:'AXA Insurance — Plateforme Conformité & Risques',
+    p3_desc:'Pipeline Azure ETL et plateforme Power BI conformité pour les opérations européennes d\'AXA. Automatisation VBA-vers-JSON restaurant la visibilité temps réel des cyber-menaces et budgets.',
+    ex_label:'Compétences', ex_title_em:'expertise',
+    ex1_t:'BI & Développement Dashboard', ex1_d:'Plateformes Power BI de niveau COMEX. DAX avancé, RLS, pipelines temps réel. De la donnée brute à l\'intelligence décisionnelle.',
+    ex2_t:'Data Engineering', ex2_d:'Architecture pipeline end-to-end. Azure Data Factory, dbt, Databricks, Snowflake. Infrastructure cloud-native à l\'échelle.',
+    ex3_t:'Programme Management', ex3_d:'Pilotage COMEX, gouvernance des jalons, livraison transversale. Multiples parties prenantes dans des équipes internationales.',
+    hw_label:'Ma façon de travailler', hw_title_em:'organisation',
+    hw_intro:"Je travaille comme membre intégré de l'équipe. Mon approche repose sur une gouvernance structurée, une transparence radicale avec le leadership, et un héritage durable.",
+    hw1_t:'Alignement exécutif', hw1_d:'J\'interviens au niveau du pilotage. Reporting hebdomadaire au COMEX, ownership des jalons et escalade proactive. La direction sait toujours où en est le projet.',
+    hw2_t:'Coordination transversale', hw2_d:'Je coordonne data engineers, métiers et équipes IT simultanément. Conçu pour la complexité multi-parties prenantes dans des opérations internationales.',
+    hw3_t:'Profondeur technique', hw3_d:'Je peux être avec vos data engineers le matin et présenter au DAF l\'après-midi. Aucune couche de traduction entre le pipeline et la salle de réunion.',
+    hw4_t:'Passation durable', hw4_d:'Chaque système que je construis est accompagné de documentation, d\'équipes formées et de standards de gouvernance qui perdurent après moi.',
+    about_label:'À propos', about_quote:'"Je peux travailler avec vos data engineers le matin et présenter les résultats au COMEX l\'après-midi. La plupart des consultants font l\'un ou l\'autre."',
+    about_intro:'Conduit des initiatives data impactant les opérations, la stratégie et la prise de décision dans 5 secteurs.',
+    about_body:'Je suis <strong>Ankit Parihar</strong> — Programme Manager avec neuf ans d\'expérience de conseil à Paris.<br><br>Titulaire d\'un <strong>MSc Big Data de Toulouse Business School</strong> (GPA 3.8, Top 1% mondial), certifié <strong>Power BI PL-300</strong>, <strong>résident français depuis 10 ans</strong>, bilingue <strong>anglais-français (DELF B1)</strong>.',
+    about_cta:'En recherche active · CDI / Freelance · Paris & Europe · Disponibilité immédiate',
+    tl1r:'Lead Consultant Data & Analytics', tl2r:'Senior Data Consultant — Programme Delivery', tl3r:'Analyste Data Stagiaire', tl4r:'Consultant Junior',
+    l1:'Courant', l3:'Langue maternelle',
+    c_label:'Contact', c_headline:'Travaillons sur un vrai <em>problème business.</em>',
+    c_sub:'Disponible immédiatement pour des postes seniors en Data & Analytics en France et en Europe. CDI, freelance ou consulting.',
+    c_name:'Nom', c_company:'Entreprise', c_msg:'Décrivez le poste ou l\'opportunité', c_send:'Envoyer',
+    c_direct:'Contact direct', c_loc_label:'Localisation',
+    c_loc:'Paris, France<br><br>Disponible partout en France & Europe.<br>Présentiel, hybride ou full remote.',
+    c_avail_text:'Disponible — immédiatement',
+  },
+  de:{
+    nav_sub:'· Paris · Festanstellung / Freelance', nav_work:'Projekte', nav_port:'Portfolio', nav_exp:'Expertise', nav_about:'Über mich', nav_contact:'Kontakt', nav_cta:'Kontaktieren',
+    hero_eyebrow:'Paris, Frankreich · Sofort verfügbar',
+    hero_role:'Senior Data & Analytics Berater · BI & Platform Delivery Lead',
+    hero_desc:'9+ Jahre Lieferung von <strong>Enterprise Analytics Plattformen</strong> in Luftfahrt, Finanzen, Pharma & Luxus.<br><br>Bewährte Expertise in <strong>End-to-End Analytics Delivery</strong> — von Rohdaten zu C-Suite Intelligenz.',
+    btn_portfolio:'Portfolio ansehen', btn_contact:'Kontakt aufnehmen',
+    hero_avail:'Sofort verfügbar · Festanstellung / Freelance · Paris & Europa · 10 Jahre Aufenthaltstitel',
+    stat1:'Aufenthaltstitel FR', stat2:'Tier-1 Kunden', stat3:'Jahre Erfahrung', stat4:'Zertifiziert',
+    work_label:'Ausgewählte Projekte', work_title_em:'Ergebnisse',
+    th_client:'Kunde', th_sector:'Branche', th_eng:'Projekt', th_res:'Ergebnis',
+    w1_eng:'BI-Team von 5 Personen aufgebaut und geleitet. KPI-Framework (OTP, Umsatz, Verspätungsanalyse) als unternehmensweiter Reporting-Standard eingeführt.',
+    w1r1:'10–15 Tage → Echtzeit', w1r2:'60% Zeitersparnis',
+    w2_eng:'Azure ETL-Pipeline und Power BI Compliance-Plattform entwickelt. Echtzeit-Transparenz für Cyber-Bedrohungen und Budgets in europäischen Betrieben wiederhergestellt.',
+    w2r1:'Manuelle Arbeit eliminiert', w2r2:'Echtzeit-Sichtbarkeit',
+    w3_eng:'Globales Brand-Intelligence-Programm. Power BI Plattform für Fälschungstrends mit RLS-Zugriffssteuerung für strategischen IP-Schutz.',
+    w3r1:'Globale Einführung', w3r2:'IP-Schutz',
+    w4_eng:'IQVIA-Lieferantendatenqualität gesteuert. Power BI KPI-Plattform für globales Vertriebsmanagement über mehrere MDM-Regionen.',
+    w4r1:'Multiregionale Sichtbarkeit', w4r2:'MDM-Governance',
+    w5_eng:'Oracle SQL → Databricks Migration geleitet. 3 Sigma BI Suites auf Snowflake/dbt geliefert. Vollständig cloud-nativer Analytics-Stack.',
+    w5r1:'Legacy abgelöst',
+    port_label:'Dashboard Portfolio', port_title:'Mit <em>echten Daten</em> gebaut. Mit Beispieldaten gezeigt.',
+    port_sub:'Drei Enterprise Power BI Plattformen in Luftfahrt und Versicherung. Klicken Sie auf die Tabs.',
+    p1_title:'Qatar Airways — Kapazitätserholung & Wettbewerber-Benchmark',
+    p1_desc:'3-seitige Power BI Plattform für Airlines zur Nachverfolgung der Post-COVID ASK-Erholung vs. Wettbewerber. Executive-KPIs, Marktanteil-Benchmarking und globale Streckenanalyse.',
+    p2_title:'Air France — Zentralisiertes Operations & Performance BI',
+    p2_desc:'3-seitige Enterprise Power BI Plattform zur Vereinheitlichung fragmentierter Daten aus Flugbetrieb, Ticketverkauf und Kundenfeedback. SQL Server DWH mit SSIS ETL und Sternschema.',
+    p3_title:'AXA Insurance — Compliance & Risikoplattform',
+    p3_desc:'Azure ETL-Pipeline und Power BI Compliance-Plattform für AXA Europa. VBA-zu-JSON Automatisierung stellte Echtzeit-Sichtbarkeit für Cyber-Bedrohungen und Budgets wieder her.',
+    ex_label:'Kernkompetenzen', ex_title_em:'Expertise',
+    ex1_t:'BI & Dashboard-Entwicklung', ex1_d:'Enterprise-grade Power BI Plattformen. Fortgeschrittenes DAX, RLS, Echtzeit-Pipelines. Von Rohdaten zu C-Suite-Entscheidungsintelligenz.',
+    ex2_t:'Data Engineering', ex2_d:'End-to-End Pipeline-Architektur. Azure Data Factory, dbt, Databricks, Snowflake. Cloud-native Infrastruktur für skalierbare Analytics.',
+    ex3_t:'Programme Management', ex3_d:'C-Suite Steuerung, Meilenstein-Governance, bereichsübergreifende Lieferung. Mehrere Stakeholder in internationalen Teams gleichzeitig.',
+    hw_label:'Meine Arbeitsweise', hw_title_em:'Organisation',
+    hw_intro:"Ich arbeite als eingebettetes Teammitglied, nicht als losstaande Externer. Mein Ansatz basiert auf strukturierter Governance und radikaler Transparenz.",
+    hw1_t:'Executive Alignment', hw1_d:'Ich steige auf Steuerungsebene ein. Wöchentliches C-Suite Reporting, klares Meilenstein-Ownership. Das Leiderschaft weiß immer, wo das Projekt steht.',
+    hw2_t:'Bereichsübergreifende Koordination', hw2_d:'Ich koordiniere Data Engineers, Fachbereiche und IT-Teams gleichzeitig. Ausgelegt für die Komplexität internationaler Operationen.',
+    hw3_t:'Technische Tiefe', hw3_d:'Morgens mit Ihren Data Engineers, nachmittags vor dem CFO. Keine Übersetzungsschicht zwischen Pipeline und Boardroom.',
+    hw4_t:'Nachhaltige Übergabe', hw4_d:'Jedes System wird mit Dokumentation, geschulten Teams und Governance-Standards geliefert, die über mein Engagement hinaus Bestand haben.',
+    about_label:'Über mich', about_quote:'"Ich kann morgens mit Ihren Data Engineers arbeiten und nachmittags Executive-Dashboards dem Vorstand präsentieren. Die meisten Berater machen nur eines von beiden."',
+    about_intro:'Geleitet von enterprise-weiten Data-Initiativen mit Einfluss auf Betrieb, Strategie und Entscheidungsfindung in 5 Branchen.',
+    about_body:'Ich bin <strong>Ankit Parihar</strong> — Programme Manager mit neun Jahren internationaler Beratungserfahrung in Paris.<br><br>Ich halte einen <strong>MSc Big Data von der Toulouse Business School</strong> (GPA 3.8, Top 1% weltweit), bin <strong>Power BI PL-300 zertifiziert</strong>, seit <strong>10 Jahren in Frankreich ansässig</strong>, zweisprachig auf <strong>Englisch & Französisch (DELF B1)</strong>.',
+    about_cta:'Aktiv auf der Suche · Festanstellung / Freelance · Paris & Europa · Sofort verfügbar',
+    tl1r:'Lead Data & Analytics Berater', tl2r:'Senior Data Berater — Programme Delivery', tl3r:'Data Analyst Praktikant', tl4r:'Junior Berater',
+    l1:'Fließend', l3:'Muttersprache',
+    c_label:'Kontakt', c_headline:'Lösen wir ein echtes <em>Business-Problem.</em>',
+    c_sub:'Sofort verfügbar für Senior Data & Analytics Stellen in Frankreich und Europa. Festanstellung, Freelance oder Consulting willkommen.',
+    c_name:'Name', c_company:'Unternehmen', c_msg:'Beschreiben Sie die Stelle oder Möglichkeit', c_send:'Nachricht senden',
+    c_direct:'Direktkontakt', c_loc_label:'Standort',
+    c_loc:'Paris, Frankreich<br><br>Verfügbar in ganz Frankreich & Europa.<br>Vor Ort, hybrid oder vollständig remote.',
+    c_avail_text:'Verfügbar — sofort',
+  },
+  nl:{
+    nav_sub:'· Parijs · Vast / Freelance', nav_work:'Werk', nav_port:'Portfolio', nav_exp:'Expertise', nav_about:'Over mij', nav_contact:'Contact', nav_cta:'Neem contact op',
+    hero_eyebrow:'Parijs, Frankrijk · Direct beschikbaar',
+    hero_role:'Senior Data & Analytics Consultant · BI & Platform Delivery Lead',
+    hero_desc:'9+ jaar levering van <strong>enterprise analytics platforms</strong> in Luchtvaart, Financiën, Pharma & Luxe.<br><br>Bewezen expertise in <strong>end-to-end analytics delivery</strong> — van ruwe data tot directie-intelligentie.',
+    btn_portfolio:'Bekijk Portfolio', btn_contact:'Neem contact op',
+    hero_avail:'Direct beschikbaar · Vast / Freelance · Parijs & Europa · 10 jaar Frans verblijfsrecht',
+    stat1:'Frans Verblijfsrecht', stat2:'Tier-1 Klanten', stat3:'Jaar Ervaring', stat4:'Gecertificeerd',
+    work_label:'Geselecteerd Werk', work_title_em:'resultaten',
+    th_client:'Klant', th_sector:'Sector', th_eng:'Opdracht', th_res:'Resultaat',
+    w1_eng:'BI-team van 5 personen opgebouwd en geleid. Executief KPI-framework adopted als bedrijfsbreed rapportagestandaard.',
+    w1r1:'10–15 dagen → realtime', w1r2:'60% tijdsbesparing',
+    w2_eng:'Azure ETL-pipeline en Power BI compliance platform ontwikkeld. Realtime zichtbaarheid voor cyberdreigingen en budgetten hersteld.',
+    w2r1:'Handmatig werk geëlimineerd', w2r2:'Realtime zichtbaarheid',
+    w3_eng:'Wereldwijd brand intelligence programma. Power BI namaaktrend platform met RLS-toegangscontroles voor IP-bescherming.',
+    w3r1:'Wereldwijde adoptie', w3r2:'IP-bescherming',
+    w4_eng:'IQVIA leveranciersdatakwaliteit beheerd. Power BI KPI-platform commerciële zichtbaarheid herstelend voor globaal verkoopmanagement.',
+    w4r1:"Multi-regio zichtbaarheid", w4r2:'MDM governance',
+    w5_eng:'Oracle SQL → Databricks migratie geleid. 3 Sigma BI suites geleverd op Snowflake/dbt. Volledig cloud-native analytics stack.',
+    w5r1:'Legacy geëlimineerd',
+    port_label:'Dashboard Portfolio', port_title:'Gebouwd met <em>echte data.</em> Getoond met voorbeelddata.',
+    port_sub:'Drie enterprise Power BI platforms in Luchtvaart en Verzekeringen. Klik op de tabs om te verkennen.',
+    p1_title:'Qatar Airways — Capaciteitsherstel & Concurrent Benchmark',
+    p1_desc:'3-pagina Power BI platform voor luchtvaartleiderschap om post-COVID ASK capaciteitsherstel te volgen vs concurrenten. Executieve KPI\'s, marktaandeel benchmarking en globale routeanalyse.',
+    p2_title:'Air France — Gecentraliseerde Operaties & Performance BI',
+    p2_desc:'3-pagina enterprise Power BI platform dat Air France\'s gefragmenteerde data unified over vluchtoperaties, ticketverkoop en klanttevredenheid. SQL Server DWH met SSIS ETL en sterschema.',
+    p3_title:'AXA Insurance — Compliance & Risicoplatform',
+    p3_desc:'Azure ETL-pipeline en Power BI compliance platform voor AXA Europa. VBA-naar-JSON automatisering herstelde realtime zichtbaarheid voor cyberdreigingen en budgetten.',
+    ex_label:'Kerncompetenties', ex_title_em:'expertise',
+    ex1_t:'BI & Dashboard Ontwikkeling', ex1_d:'Executief-niveau Power BI platforms. Geavanceerd DAX, RLS, realtime pipelines. Van ruwe data naar directie-intelligentie.',
+    ex2_t:'Data Engineering', ex2_d:'End-to-end pipeline architectuur. Azure Data Factory, dbt, Databricks, Snowflake. Cloud-native infrastructuur gebouwd voor schaal.',
+    ex3_t:'Programme Management', ex3_d:'Directie-steering, mijlpaalgovernance, functieoverschrijdende levering. Meerdere stakeholders in internationale teams tegelijkertijd.',
+    hw_label:'Hoe ik werk', hw_title_em:'organisatie',
+    hw_intro:"Ik werk als ingebed teamlid, niet als losstaande externe. Mijn aanpak is gebaseerd op gestructureerde governance en radicale transparantie met het leiderschap.",
+    hw1_t:'Executieve afstemming', hw1_d:'Ik stap in op sturingsniveau. Wekelijkse rapportage aan de directie, duidelijk mijlpaaleigenaarschap. Het leiderschap weet altijd waar het project staat.',
+    hw2_t:'Functieoverschrijdende coördinatie', hw2_d:'Ik coördineer data engineers, businessowners en IT-teams tegelijkertijd. Gebouwd voor de complexiteit van internationale operaties.',
+    hw3_t:'Technische diepgang', hw3_d:"'s Ochtends bij uw data engineers, 's middags voor de CFO. Geen vertaallaag nodig tussen pipeline en boardroom.",
+    hw4_t:'Duurzame overdracht', hw4_d:'Elk systeem dat ik bouw komt met documentatie, getrainde teams en governancestandaarden die mijn betrokkenheid overleven.',
+    about_label:'Over mij', about_quote:"\"'s Ochtends met uw data engineers, 's middags executive dashboards presenteren aan uw directie. De meeste consultants doen één van beide.\"",
+    about_intro:'Geleid van data-initiatieven op ondernemingsniveau in 5 sectoren.',
+    about_body:'Ik ben <strong>Ankit Parihar</strong> — Programme Manager met negen jaar internationale consultingervaring in Parijs.<br><br>Ik heb een <strong>MSc Big Data van Toulouse Business School</strong> (GPA 3.8, Top 1% wereldwijd), ben <strong>Power BI PL-300 gecertificeerd</strong>, heb <strong>10 jaar Frans verblijfsrecht</strong>, tweetalig in <strong>Engels & Frans (DELF B1)</strong>.',
+    about_cta:'Actief op zoek · Vast / Freelance · Parijs & Europa · Direct beschikbaar',
+    tl1r:'Lead Data & Analytics Consultant', tl2r:'Senior Data Consultant — Programme Delivery', tl3r:'Data Analyst Stagiair', tl4r:'Junior Consultant',
+    l1:'Vloeiend', l3:'Moedertaal',
+    c_label:'Contact', c_headline:'Laten we een echt <em>businessprobleem oplossen.</em>',
+    c_sub:'Direct beschikbaar voor senior data & analytics functies in Frankrijk en Europa. Vast, freelance of consulting welkom.',
+    c_name:'Naam', c_company:'Bedrijf', c_msg:'Vertel me over de functie of kans', c_send:'Bericht sturen',
+    c_direct:'Direct contact', c_loc_label:'Locatie',
+    c_loc:'Parijs, Frankrijk<br><br>Beschikbaar in heel Frankrijk & Europa.<br>Op kantoor, hybride of volledig remote.',
+    c_avail_text:'Beschikbaar — direct',
+  }
+};
+
+function setLang(l){
+  document.querySelectorAll('.lb').forEach(b=>b.classList.toggle('on',b.textContent===l.toUpperCase()));
+  const t=T[l];
+  document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(t[k]!==undefined)el.innerHTML=t[k]});
+  document.querySelectorAll('[data-i18n-ph]').forEach(el=>{const k=el.getAttribute('data-i18n-ph');if(t[k]!==undefined)el.placeholder=t[k]});
+  document.documentElement.lang=l;
+}
+</script>
+</body>
+</html>
